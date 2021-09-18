@@ -1,9 +1,11 @@
-(* if
+(* fib
   Author: Anthony Narlock
   Date: 9/18/2021
 *)
 
-(* Write an if expression that evaluates to 42 if 2 is greater than 1
-  and otherwise evaluates to 7 *)
-if 2 > 1 then 42 else 7 ;;
-- : int = 42
+(* Define a recursive function fib : int -> int, such that fib n is the nth number in the
+Fibonacci sequence, which is 1, 1, 2, 3, 5, 8, 13 *)
+
+let rec fib (n:int) : int =
+  if (n = 1 || n = 2) then 1
+  else fib (n-1) + fib (n-2)
