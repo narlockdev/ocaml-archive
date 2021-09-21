@@ -55,14 +55,17 @@ let rec remove_odds (xs: int list) : int list =
 Write a function remove_caps of type string list -> string list to remove all the 
 strings beginning with a captial letter from a list of strings *)
 
+(* Helper function to check if the character is in the alphabet *)
+let is_alpha = function 'a' .. 'z' | 'A' .. 'Z' -> true | _ -> false
+
 let rec remove_caps (xs: string list) : string list =
   match xs with
   | [] -> []
   | x::[] -> 
-      let c = Char.uppercase (String.get x 0)
-      in if (String.get x 0 = c) then [] else x :: []
+      let c = Char.uppercase_ascii (String.get x 0)
+      in if (String.get x 0 = c && is_alpha c = true) then [] else x :: []
   | x::rest ->
-      let c = Char.uppercase (String.get x 0)
-      in if (String.get x 0 = c) then remove_caps rest else x :: remove_caps rest
+      let c = Char.uppercase_ascii (String.get x 0)
+      in if (String.get x 0 = c && is_alpha c = true) then remove_caps rest else x :: remove_caps rest
 
 
