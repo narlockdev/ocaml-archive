@@ -37,7 +37,7 @@ let rec productf (xs: float list) : float =
 It will likely use one of the operators < or > in doing this. (they work for different value types) *)
 let rec minimum (xs: 'a list) : 'a =
   match xs with
-  | [] -> raise (Invalid_argument "head")
+  | [] -> raise (Invalid_argument "minimum")
   | x::[] -> x
   | x::rest -> if x < minimum rest then x else minimum rest
 
@@ -48,7 +48,7 @@ to return either of them*)
 
 let rec longest (xs: string list) : string =
   match xs with
-  | [] -> raise (Invalid_argument "head")
+  | [] -> raise (Invalid_argument "longest")
   | x::[] -> x
   | x::rest -> if (String.length x) > (String.length (longest rest)) then x else longest rest
 
@@ -126,18 +126,20 @@ let rec all_odds (xs: int list) : int list =
 (* all_capitalized: 
 returns all the strings that begin with a capitalized letter. Here you might use
 the String.get function to extract the first character from the string and then
-check if the character is the same as its capitalized version *)
+check if the character is the same as its capitalized version *) 
+
+let not_empty (s: string) : bool =
+  if s = "" then raise (Invalid_argument "all_capitalized") else false
+
 let rec all_capitalized (xs: string list) : string list =
-  match xs with
+  match xs with 
   | [] -> []
   | x::[] ->
-    let c = Char.uppercase_ascii (String.get x 0)
-    in if (String.get x 0 = c) then x :: [] else []
+    if not_empty x and (String.get x 0 = Char.uppercase_ascii (String.get x 0)) 
+      then x :: [] else []
   | x::rest ->
-    let c = Char.uppercase_ascii (String.get x 0)
-    in if (String.get x 0 = c) 
-      then x :: all_capitalized rest 
-      else all_capitalized rest
+    if not_empty x and (String.get x 0 = Char.uppercase_ascii (String.get x 0)) 
+      then x :: all_capitalized rest else all_capitalized rest
 
 (* all_squares: function will return all the integers that are squares *)
 let is_square x : bool =
@@ -152,7 +154,7 @@ let rec all_squares (xs: int list) : int list =
   
 (* group: function take a list of elements and groups them into pairs *)
 let rec group (xs: 'a list) : ('a * 'a) list =
-  if List.length xs mod 2 != 0 then raise (Invalid_argument "odd list")
+  if List.length xs mod 2 != 0 then raise (Invalid_argument "group")
   else
   match xs with
   | [] -> []
@@ -168,4 +170,4 @@ let rec unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
   | [] -> ([],[])
   | (x,y)::[] -> (x::[],y::[])
   | (x,y)::(x2,y2)::[] -> (x::x2::[],y::y2::[])
-  | (x,y)::(x2,y2)::rest -> (x::x2::fst (unzip rest) , y::y2::snd (unzip))
+  | (x,y)::(x2,y2)::rest -> (x::x2::fst (unzip rest) , y::y2::snd (unzip rest))
