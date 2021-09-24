@@ -170,4 +170,5 @@ let rec unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
   match lst with
   | [] -> ([],[])
   | (x,y)::[] -> (x::[],y::[])
-  (*| (x,y)::(x2,y2)::rest -> (x::x2,y::y2)*)
+  | (x,y)::(x2,y2)::[] -> (x::x2::[],y::y2::[])
+  | (x,y)::(x2,y2)::rest -> (x::x2::fst (unzip rest) , y::y2::snd (unzip))
