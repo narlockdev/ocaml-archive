@@ -65,13 +65,10 @@ let rec append (xs: 'a list) (ys: 'a list): 'a list =
 (* elem: function will use the = operator to determine if a value is in the list
   Use || instead of if-then-else to do this. *)
 
-(* TODO *)
-(*I did this in if-then-else form because I couldn't figure out constraint *)
-let rec elem (x: 'a) (xs: 'a list) : bool =
+let rec elem (element: 'a) (xs: 'a list) : bool =
   match xs with
   | [] -> false
-  | x::[] -> a = x
-  | x::rest -> a = x || a = (elem a rest)
+  | x::rest -> x = element || elem element rest
 
 (* excited: the function uses the string concatenation operator ^ to add
 the string "!" to the end of each string in the input list *)
