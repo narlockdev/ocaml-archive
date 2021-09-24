@@ -65,9 +65,90 @@ let rec append (xs: 'a list) (ys: 'a list): 'a list =
 (* elem: function will use the = operator to determine if a value is in the list
   Use || instead of if-then-else to do this. *)
 
-(*COMPLETE THIS!!!*)
-let rec elem (a: 'a) (xs: 'a list) : bool =
+(* TODO *)
+(*I did this in if-then-else form because I couldn't figure out constraint *)
+let rec elem (x: 'a) (xs: 'a list) : bool =
   match xs with
   | [] -> false
   | x::[] -> a = x
   | x::rest -> a = x || a = (elem a rest)
+
+(* excited: the function uses the string concatenation operator ^ to add
+the string "!" to the end of each string in the input list *)
+let rec excited (xs: string list) : string list =
+  match xs with
+  | [] -> []
+  | x::[] -> (x ^ "!") :: []
+  | x::rest -> (x ^ "!") :: excited rest
+
+(* suffix: function is a generalization on the one above. Adds a given string
+to the end of each string in a list *)
+let rec suffix (s: string) (xs: string list) : string list =
+  match xs with
+  | [] -> []
+  | x::[] -> (x ^ s) :: []
+  | x::rest -> (x ^ s) :: suffix s rest
+
+(* excited': function should have the same behavior as excited but should call
+suffix to compute the resulting strings *)
+let excited' (lst: string list) = suffix "!" lst
+
+(* lengths: function returns the length of each string in the input 
+Might use String.length function in this one *)
+let rec lengths (xs: string list) : int list =
+  match xs with
+  | [] -> []
+  | x::[] -> (String.length x) :: []
+  | x::rest -> (String.length x) :: lengths rest
+
+(* length_pairs: function will compute the length of the strings in the input
+list, like the function above, but it returns the string and its length in a pair
+Thus the result is a list of pairs, each pair containing a string and an int *)
+let rec length_pairs (xs: string list) : (string * int) list =
+  match xs with
+  | [] -> []
+  | x::[] -> (x , (String.length x )) :: []
+  | x::rest -> (x , (String.length x)) :: length_pairs rest
+
+(* capitalize: function will capitalize each string in a list. The function
+String.capitalize_ascii might be usefull here *)
+let rec capitalize (xs: string list) : string list =
+  match xs with
+  | [] -> []
+  | x::[] -> (String.capitalize_ascii x) :: []
+  | x::rest -> (String.capitalize_ascii x) :: capitalize rest
+
+(* all_odds: function may remind you of the one we did in class
+returns all of the odd numbers in the input list *)
+let rec all_odds (xs: int list) : int list =
+  match xs with
+  | [] -> []
+  | x::[] -> if (x mod 2 = 0) then [] else x :: []
+  | x::rest -> if (x mod 2 = 0) then all_odds rest else x :: all_odds rest
+
+(* all_capitalized: 
+returns all the strings that begin with a capitalized letter. Here you might use
+the String.get function to extract the first character from the string and then
+check if the character is the same as its capitalized version *)
+let rec all_capitalized (xs: string list) : string list =
+  match xs with
+  | [] -> []
+  | x::[] ->
+    let c = Char.uppercase_ascii (String.get x 0)
+    in if (String.get x 0 = c) then x :: [] else []
+  | x::rest ->
+    let c = Char.uppercase_ascii (String.get x 0)
+    in if (String.get x 0 = c) 
+      then x :: all_capitalized rest 
+      else all_capitalized rest
+
+(* all_squares: function will return all the integers that are squares *)
+let is_square x : bool =
+  let sq = sqrt x in
+  x = (sq *. sq)
+
+let rec all_squares (xs: int list) : int list =
+  match xs with
+  | [] -> []
+  | x::[] -> if is_square (float_of_int x) = true then x :: [] else [] 
+  | x::rest -> if is_square (float_of_int x) = true then x :: all_squares rest else all_squares rest 
