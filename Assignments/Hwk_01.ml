@@ -151,4 +151,23 @@ let rec all_squares (xs: int list) : int list =
   match xs with
   | [] -> []
   | x::[] -> if is_square (float_of_int x) = true then x :: [] else [] 
-  | x::rest -> if is_square (float_of_int x) = true then x :: all_squares rest else all_squares rest 
+  | x::rest -> if is_square (float_of_int x) = true then x :: all_squares rest else all_squares rest
+  
+(* group: function take a list of elements and groups them into pairs *)
+let rec group (xs: 'a list) : ('a * 'a) list =
+  if List.length xs mod 2 != 0 then raise (Invalid_argument "odd list")
+  else
+  match xs with
+  | [] -> []
+  | _::[] -> []
+  | x::x2::rest -> (x, x2) :: group rest
+  
+(* unzip: function takes a list of pairs and unzips them into a pair of lists 
+
+for any list strs of type string list,
+(strs, lengths strs) = unzip (length pairs strs) *)
+let rec unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
+  match lst with
+  | [] -> ([],[])
+  | (x,y)::[] -> (x::[],y::[])
+  (*| (x,y)::(x2,y2)::rest -> (x::x2,y::y2)*)
