@@ -9,11 +9,11 @@ open Char
 let sum_of_floats (lst: float list) : float =
   List.fold_left (+.) 0. lst
 
-(* Square all the floats in a list - fold *)
-let square_floats (lst: float list) : float =
-  let sq (acc : float) (x: float) : float = x *. x
+(* Square all the floats in a list - map *)
+let square_floats (lst: float list) : float list =
+  let sq (x: float) : float = x *. x
   in
-  List.fold_left sq 1. lst
+  List.map sq lst
   
 (* Append ! to all of the strings in a list - map *)
 let exclaimify (l: string list) : string list =
