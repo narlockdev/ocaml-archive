@@ -129,16 +129,16 @@ the String.get function to extract the first character from the string and then
 check if the character is the same as its capitalized version *) 
 
 let not_empty (s: string) : bool =
-  if s = "" then raise (Invalid_argument "all_capitalized") else false
+  if s = "" then raise (Invalid_argument "all_capitalized") else true
 
 let rec all_capitalized (xs: string list) : string list =
   match xs with 
   | [] -> []
   | x::[] ->
-    if not_empty x and (String.get x 0 = Char.uppercase_ascii (String.get x 0)) 
+    if not_empty x && (String.get x 0 = Char.uppercase_ascii (String.get x 0)) 
       then x :: [] else []
   | x::rest ->
-    if not_empty x and (String.get x 0 = Char.uppercase_ascii (String.get x 0)) 
+    if not_empty x && (String.get x 0 = Char.uppercase_ascii (String.get x 0)) 
       then x :: all_capitalized rest else all_capitalized rest
 
 (* all_squares: function will return all the integers that are squares *)
