@@ -104,12 +104,21 @@ let is_square x : bool =
 let all_square (xs: int list) : int list =
   List.filter (fun x -> is_square (float_of_int x)) xs
 
-(* group: function takes a list of elements and groups them into pairs *)
+(* group: function takes a list of elements and groups them into pairs 
 let group (xs: 'a list) : ('a * 'a) list =
   let group_pair x y = (x , y)
 in
 match xs with
 | [] -> []
 | _::[] -> []
-| x::x2 -> List.map (group_pair x x2) xs
+| x::x2 -> List.map (group_pair x x2) xs *)
+
+(* unzip: function takes a list of pairs and unzips them into a pair of lists *)
+let unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
+  (* Takes in type ('a * 'b) and returns part of ('a list * 'b list) *)
+  let unzip_pair (pair: 'a * 'b) = (fst pair, snd pair)
+in
+match lst with
+| [] -> ([],[])
+| (x,y)::rest -> List.map ( unzip_pair (x,y) ) rest 
   
