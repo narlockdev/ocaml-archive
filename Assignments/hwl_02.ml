@@ -114,11 +114,11 @@ match xs with
 | x::x2 -> List.map (group_pair x x2) xs *)
 
 (* unzip: function takes a list of pairs and unzips them into a pair of lists *)
+
+(*  
+unzip [(1, 2); (3, 4); (5, 6)] ;;
+- : int list * int list = ([1; 3; 5], [2; 4; 6])
+*)
+
 let unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
-  (* Takes in type ('a * 'b) and returns part of ('a list * 'b list) *)
-  let unzip_pair (pair: 'a * 'b) = (fst pair, snd pair)
-in
-match lst with
-| [] -> ([],[])
-| (x,y)::rest -> List.map ( unzip_pair (x,y) ) rest 
-  
+  List.fold_right (fun tup_sofar pair -> (fst tup_sofar :: fst pair , snd tup_sofar :: snd pair)) lst ([],[])
