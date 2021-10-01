@@ -30,7 +30,7 @@ Primary Characteristics:
 		 int, float, bool, string, char
 			Errors will be reported for expressions like 1 + "Hello"
 					This is because the operator `+` represents integer addition,
-					since "Hello" is an integer, this exception will be caught
+					since "Hello" is not an integer, this exception will be caught
 				- Other errors like divide by zero are caught as well
 				
 		Modules organize code into useful components

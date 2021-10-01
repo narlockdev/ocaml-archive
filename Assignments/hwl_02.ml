@@ -74,6 +74,11 @@ Might use String.length function in this one *)
 let lengths (xs: string list) : int list =
   List.map (fun x -> String.length x) xs
 
+(* length_pairs: function will compute the length of the strings in the input
+list, like the function above, but it returns the string and it's length in a pair *)
+let length_pairs (xs: string list) : (string * int) list =
+  List.map (fun x -> (x, String.length x)) xs
+
 (* capitalize: function will capitalize each string in a list. The function
 String.capitalize_ascii might be useful here *)
 let capitalize (xs: string list) : string list =
@@ -96,12 +101,12 @@ let equal_cap (s: string) : bool =
 let all_capitalized (xs: string list) : string list =
   List.filter (fun x -> not_empty x && equal_cap x) xs
 
-(* all_square: function will return all the integers that are squares *)
+(* all_squares: function will return all the integers that are squares *)
 let is_square x : bool =
   let sq = sqrt x in
   x = (sq *. sq)
 
-let all_square (xs: int list) : int list =
+let all_squares (xs: int list) : int list =
   List.filter (fun x -> is_square (float_of_int x)) xs
 
 (* TODO group: function takes a list of elements and groups them into pairs *)
@@ -110,8 +115,20 @@ let all_square (xs: int list) : int list =
 group [1;2;3;4] ;;
 - : (int * int) list = [(1, 2); (3, 4)]
 
-Getting back different type - use a fold
-*)
+args: 'a list
+return: list of 'a tuples
+
+
+let group (xs: 'a list) : ('a * 'a) list =
+  if List.length xs mod 2 != 0 then raise (Invalid_argument "group")
+  else
+    match xs with
+    | [] -> 
+    | x::x2::rest -> List.map (fun x x2 -> (x,x2) ) rest
+  List.map (fun x -> (x,x) ) xs 
+
+  *)
+  
 
 
 (* unzip: function takes a list of pairs and unzips them into a pair of lists *)
@@ -123,3 +140,28 @@ unzip [(1, 2); (3, 4); (5, 6)] ;;
 
 let unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
   List.fold_right (fun tup_sofar pair -> (fst tup_sofar :: fst pair , snd tup_sofar :: snd pair)) lst ([],[])
+
+  (*
+
+let createTuple (x: 'a) (y: 'a) : ('a * 'a) = (x , y)
+                                              
+let group (lst: 'a list) : ('a * 'a) list =
+  match lst with 
+  | [] -> []
+  | x::x2::rest::[] -> List.map (createTuple x x2) rest
+
+  *)
+
+  (*
+let pair (x: 'a) (y: 'a) : ('a * 'a) = (x, y)
+
+let group (lst: 'a list) : ('a * 'a) list = 
+  if List.length lst mod 2 != 0 then raise (Invalid_argument "group")
+  else 
+    match lst with
+    | [] -> [] 
+    | x::y::[] -> (x,y) :: []
+    | x::y::x2::y2::[] -> (x,y) :: (x2, y2) :: []
+    | x::y::rest -> List.fold_left (pair x y) [] rest
+    *)
+
