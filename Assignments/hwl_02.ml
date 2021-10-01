@@ -114,21 +114,20 @@ let all_squares (xs: int list) : int list =
 (*
 group [1;2;3;4] ;;
 - : (int * int) list = [(1, 2); (3, 4)]
+*)
 
-args: 'a list
-return: list of 'a tuples
-
-
-let group (xs: 'a list) : ('a * 'a) list =
-  if List.length xs mod 2 != 0 then raise (Invalid_argument "group")
+let group (lst: 'a list) : ('a * 'a) list =
+  if List.length lst mod 2 != 0 then raise (Invalid_argument "group")
   else
-    match xs with
-    | [] -> 
-    | x::x2::rest -> List.map (fun x x2 -> (x,x2) ) rest
-  List.map (fun x -> (x,x) ) xs 
-
-  *)
-  
+    let f (c: int * ('a *'a) list) (e: 'a) : int * (('a * 'a) list) =
+        if (fst c) mod 2 = 0 
+          then ((fst c) + 1, (e,e) :: (snd c))
+        else
+          match (snd c) with
+          | (x,_)::rest -> ((fst c)+1,(x,e)::rest)
+    in
+    match List.fold_left f (0,[]) lst with
+    | (pos, list) -> List.rev list
 
 
 (* unzip: function takes a list of pairs and unzips them into a pair of lists *)
@@ -140,28 +139,4 @@ unzip [(1, 2); (3, 4); (5, 6)] ;;
 
 let unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
   List.fold_right (fun tup_sofar pair -> (fst tup_sofar :: fst pair , snd tup_sofar :: snd pair)) lst ([],[])
-
-  (*
-
-let createTuple (x: 'a) (y: 'a) : ('a * 'a) = (x , y)
-                                              
-let group (lst: 'a list) : ('a * 'a) list =
-  match lst with 
-  | [] -> []
-  | x::x2::rest::[] -> List.map (createTuple x x2) rest
-
-  *)
-
-  (*
-let pair (x: 'a) (y: 'a) : ('a * 'a) = (x, y)
-
-let group (lst: 'a list) : ('a * 'a) list = 
-  if List.length lst mod 2 != 0 then raise (Invalid_argument "group")
-  else 
-    match lst with
-    | [] -> [] 
-    | x::y::[] -> (x,y) :: []
-    | x::y::x2::y2::[] -> (x,y) :: (x2, y2) :: []
-    | x::y::rest -> List.fold_left (pair x y) [] rest
-    *)
 
