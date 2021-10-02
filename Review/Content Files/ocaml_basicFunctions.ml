@@ -72,32 +72,35 @@ let rec fib x =
   if x = 0 then 0 else
     if x < 3 then 1 else fib (x - 1) + fib (x - 2)
 
-(* 
-rec defines a recursive function
-function name : fib
-arguments : x
-expr : RHS 
 
-The type of fib is: 
-val fib : int -> int = <fun>
+(* Exercise 1: Write a function named circle_area that
+takes in the radius and returns the area of the circle *)
+let circle_area (r: float) : float =
+  r *. r *. 3.14
+
+(* Exercise 2: Write a function named power that takes in
+a power `n` and a float `x` and returns x ^ n *)
+
+(* 2^3 = 8 = 2 * 2 * 2 *)
+let rec power (n: int) (x: float) : float =
+  if n = 0 then 1.0 (* anything to the power of 0 is 1.0 *)
+  else x *. power (n - 1) x
+
+(* Exercise 3: Write a function named gcd that computes
+the greatest common divisor of two positive integers *)
+
+(* How do we attack this problem? 
+- Pick a number that must be greater than or equal to the GCD
+- Decrement it by one until it is a common divisor
 *)
 
-(* More examples of some simple functions in OCaml *)
-
-(* #1 - Calculates circumference; only uses literals *)
-let circle_circum_v1 (r:float) : float = 2.0 *. 3.1415 *. r
-
-(* #2 - Calculates circumference; uses nested let for pi *)
-let circle_circum_v2 (r:float) : float = 
-  let pi = 3.1415 in
-  2.0 *. pi *. r
-
-(* #3 - Recursively Caclulates b^p, uses multiple arguments *)
-let rec power (p:int) (b:float) : float =
-  if p = 1 then b
-  else b *. power (p-1) b
-
-(* #4 - Calculates cube area uses recursive power function *)
-let cube (x:float) : float =
-  power 3 x
+let gcd (x: int) (y: int) : int =
+  let min = if x < y then x else y
+  in
+  let rec dec m =
+    if x mod m = 0 && y mod m = 0
+    then m 
+    else dec (m-1)
+  in
+  dec min
 
