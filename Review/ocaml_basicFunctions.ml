@@ -72,3 +72,13 @@ let rec fib x =
   if x = 0 then 0 else
     if x < 3 then 1 else fib (x - 1) + fib (x - 2)
 
+(* 
+rec defines a recursive function
+function name : fib
+arguments : x
+expr : RHS 
+
+The type of fib is: 
+val fib : int -> int = <fun>
+*)
+
