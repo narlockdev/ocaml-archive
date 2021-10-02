@@ -57,5 +57,60 @@ let head (lst: 'a list) : 'a =
   | x::_ -> x
   | _ -> raise (Invalid_argument "head")
 
+(* Exercise1 : Write a function that adds up all the numbers
+in an integer list *)
+let rec sum (xs: int list) : int =
+  match xs with
+  | [] -> 0
+  | x::[] -> x
+  | x::rest -> x + sum rest
 
+(* Exercise2: Write a function that finds the smallest element
+in the list. *)
+let rec minimum (xs: 'a list) : 'a =
+  match xs with
+  | [] -> raise (Invalid_argument "minimum")
+  | x::[] -> x
+  | x::rest -> if x < minimum rest then x else minimum rest
+
+(* Exercise3: Write a function that appends two lists into one *)
+let rec append (xs: 'a list) (ys: 'a list): 'a list =
+  match xs with 
+  | [] -> ys
+  | x::[] -> x :: ys
+  | x::rest -> x :: (append rest ys)
+
+(* Exercise4: Write a function that determines if a value is
+in a list or not *)
+let rec elem (element: 'a) (xs: 'a list) : bool =
+  match xs with
+  | [] -> false
+  | x::rest -> x = element || elem element rest
+
+(* Exercise5: Write a function that uses the string 
+concatenation operator ^ to add the string ! to the end
+of each string in the input list *)
+let rec excited (xs: string list) : string list =
+  match xs with
+  | [] -> []
+  | x::[] -> (x ^ "!") :: []
+  | x::rest -> (x ^ "!") :: excited rest
+
+(* Exercise6: Write a function that will compute the length
+of a string given in the input list. Return a tuple (pair) list
+with each pair containing the (string, length of string) *)
+let rec length_pairs (xs: string list) : (string * int) list =
+  match xs with
+  | [] -> []
+  | x::[] -> (x , (String.length x )) :: []
+  | x::rest -> (x , (String.length x)) :: length_pairs rest
+
+(* Exercise 7: Write a function that takes a list of pairs
+and unzips them into a pair of lists *)
+let rec unzip (lst: ('a * 'b) list) : ('a list * 'b list) =
+  match lst with
+  | [] -> ([],[])
+  | (x,y)::[] -> (x::[],y::[])
+  | (x,y)::(x2,y2)::[] -> (x::x2::[],y::y2::[])
+  | (x,y)::(x2,y2)::rest -> (x::x2::fst (unzip rest) , y::y2::snd (unzip rest))
 
