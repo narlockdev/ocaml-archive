@@ -5,4 +5,4 @@ Click the following to go straight to it's contents:
 - [OCaml Basics](https://github.com/narlock/ocaml-archive/blob/main/Review/Content%20Files/ocaml_basics.ml)
 - [Basic Functions](https://github.com/narlock/ocaml-archive/blob/main/Review/Content%20Files/ocaml_basicFunctions.ml)
 - [Intro to Pattern Matching with Lists](https://github.com/narlock/ocaml-archive/blob/main/Review/Content%20Files/list_patternMatch.ml)
-- [Intro to Higher-Ordered Functions with Lists: Fold, Map, Filter List]()
+- [Intro to Higher-Ordered Functions with Lists: Fold, Map, Filter List](https://github.com/narlock/ocaml-archive/blob/main/Review/Content%20Files/list_higherOrder.ml)
