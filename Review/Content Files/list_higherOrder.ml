@@ -90,3 +90,101 @@ let only_capitalized (lst: string list) : string list =
 
 (* There is a difference between folding left and
 folding right *)
+
+(* Example 1 
+Write a function that adds up all the numbers in an integer list *)
+
+(* Using List.fold_left *)
+let suml (lst: int list) : int =
+  List.fold_left ( + ) 0 xs
+
+(* In this example, there is not an accumulator value
+We should also note the `0` which represents more or
+less the base value of this expression
+-> what our first element is going to be applied to *)
+
+(* In this example, we can go through the steps of Fold_left as follows: 
+
+Consider suml [1;2;3]
+
+= fold_left ( + ) 0 [1;2;3]
+= fold_left ( + ) (0 + 1) [2;3]
+= fold_left ( + ) ((0+1) + 2) [3]
+= fold_left ( + ) (((0+1) + 2)) + 3) []
+= (((0 + 1) + 2) + 3)
+= 6 
+*)
+
+(* Let's write the same function, but with fold_right *)
+let sumr (lst: int list) : int =
+  List.fold_right ( + ) xs 0
+
+(* We see now that our base value is going to be
+represented as the second argument in our function 
+(reminder that the function is simply ( + ) - the int add operation 
+*)
+
+(* Consider sumr [1;2;3] 
+
+= fold_right (+) [1;2;3] 0 
+= (+) 1 (fold_right (+) [2;3] 0)
+= 1 + (fold_right (+) [2;3] 0)
+= 1 + ( (+) 2 (fold_right (+) [3] 0)
+= 1 + (2 + (fold_right (+) [3] 0))
+= 1 + (2 + ( (+) 3 (fold_right (+) [] 0 ))
+= 1 + (2 + (3 + (fold_right (+) [] 0)))
+= 1 + (2 + (3 + 0))
+= 6
+*)
+
+(* You can essentially write the fold expressions however you see
+fit: if you think a fold right would work better than a fold left
+in implementation: go for it; I personally like Fold_left as you
+are always beginning with your base value *)
+
+(* Fold Example 2 - using accumulators *)
+
+(* Write a function (without recursion) that takes in
+any list and returns the length of the list *)
+let length (lst: 'a list) : int = 
+  List.fold_left (fun length_sofar x -> length_sofar + 1) 0 lst
+
+(* length_sofar represents this sort of accumulator value
+Basically, our length_sofar will begin at 0 (since the length of
+a list we don't know will begin at zero - the lowest possible
+length we can have in a list is no elements whatsoever) 
+
+Everytime a new element is read with the function, length_sofar is
+incremented. Essentially the value of the previous call is still being
+used. Hence this is why we call this an accumulator
+*)
+
+(* Fold Example 3 - using multiple accumulators *)
+
+(* Write a function that takes in a list of integers. This function
+will return the sum of the even positions in the list *)
+let sum_even_positions (lst: int list) : int =
+  let f (sum, position) (element) =
+    if position mod 2 = 0
+      then (sum + element, position + 1)
+  else (sum, position + 1)
+  in
+  match List.fold_left f (0,0) lst with
+  | (sum, pos) -> sum
+
+(* 
+Recall that even positions: 0, 2, 4
+So If we call sum_even_postions (10::2::30::4::[])
+We are doing 0 + 10 + 30 (the 0 representing initial accumualtor)
+
+Notice that the accumulator in this example contains a tuple:
+essentially stating that we are storing two different accumulators
+inside of one. This tuple will be sent every time a fold occurs. 
+
+The match at the end is sigificant: since if we didn't match, we
+would always be returning a tuple with both accumulators. Since we 
+only want the sum accumulator, we can match the tuple, and return
+the sum (which is the int that will be returned) - we will receive
+an error if we don't do it this way due to the function specifically
+returning an integer by the definition
+*)
