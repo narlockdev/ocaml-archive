@@ -188,3 +188,40 @@ the sum (which is the int that will be returned) - we will receive
 an error if we don't do it this way due to the function specifically
 returning an integer by the definition
 *)
+
+(* Exercise 1 *)
+
+(* Think: Which higher-order function should I use? *)
+
+(* productf: function multiplies all the numbers in a float list
+function satisfies product (l1 @ l2) = productf l1 *. product l2 *)
+let productf (xs: float list) : float =
+  List.fold_left ( *. ) 1. xs
+
+(* Exercise 2 *)
+
+(* minimum: function finds the smallest element in the list *)
+let minimum (lst: 'a list) : 'a =
+  let chooseMin min_sofar a' = if a' > min_sofar then min_sofar else a'
+  in
+  match lst with
+  | [] -> raise (Invalid_argument "minimum")
+  | x::rest -> List.fold_left chooseMin x rest
+
+(* Exercise 3 *)
+
+(* all_squares: function will return all the integers that are squares *)
+let is_square x : bool =
+  let sq = sqrt x in
+  x = (sq *. sq)
+
+let all_squares (xs: int list) : int list =
+  List.filter (fun x -> is_square (float_of_int x)) xs
+
+(* Exercise 4 *)
+
+(* suffix: function uses string concaenation operator ^ to add
+the string "!" to the end of each string in the input list *)
+let suffix (s: string) (xs: string list) : string list =
+  List.map (fun x -> x ^ s) xs
+
