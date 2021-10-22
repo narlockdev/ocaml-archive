@@ -1,0 +1,16 @@
+### Starting build.
+# Target: lab_02_tests.ml.depends, tags: { extension:ml, file:lab_02_tests.ml, ocaml, ocamldep, quiet }
+/usr/bin/ocamldep.opt -modules lab_02_tests.ml > lab_02_tests.ml.depends
+# Target: lab_02.mli.depends, tags: { extension:mli, file:lab_02.mli, ocaml, ocamldep, quiet }
+/usr/bin/ocamldep.opt -modules lab_02.mli > lab_02.mli.depends # cached
+# Target: lab_02.cmi, tags: { byte, compile, extension:mli, file:lab_02.mli, interf, ocaml, quiet }
+/usr/bin/ocamlc.opt -c -o lab_02.cmi lab_02.mli # cached
+# Target: lab_02_tests.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:lab_02_tests.cmo, file:lab_02_tests.ml, implem, ocaml, quiet }
+/usr/bin/ocamlc.opt -c -o lab_02_tests.cmo lab_02_tests.ml
+# Target: lab_02.ml.depends, tags: { extension:ml, file:lab_02.ml, ocaml, ocamldep, quiet }
+/usr/bin/ocamldep.opt -modules lab_02.ml > lab_02.ml.depends # cached
+# Target: lab_02.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:lab_02.cmo, file:lab_02.ml, implem, ocaml, quiet }
+/usr/bin/ocamlc.opt -c -o lab_02.cmo lab_02.ml # cached
+# Target: lab_02_tests.byte, tags: { byte, dont_link_with, extension:byte, file:lab_02_tests.byte, link, ocaml, program, quiet }
+/usr/bin/ocamlc.opt lab_02.cmo lab_02_tests.cmo -o lab_02_tests.byte
+# Compilation successful.
