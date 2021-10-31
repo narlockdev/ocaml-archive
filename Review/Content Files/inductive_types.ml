@@ -178,4 +178,47 @@ Exercise 2 as an example. Re-write the square_tree function but now it
 uses tree_map to map the function into the values in the tree *)
 let square_tree' t = tree_map (fun x -> x * x) t
 
+(* Let's talk about folding over inductive types.
+If the inductive type has 'n' different variants, then the
+fold/reduce function takes n+1 arguments *)
+
+(* Let's write a fold function for binary tree *)
+let rec tree_fold (e: 'b) (n: 'b -> 'a -> 'b -> 'b) (t: 'a btree) : 'b =
+  match t with
+  | Leaf -> e
+  | Node (left, v, right) -> n (tree_fold e n left) v (tree_fold e n right)
+
+(* Exercise 5: Write a function that calculates the product of a tree *)
+let btree_product (t: int btree) : int =
+  tree_fold 1 (fun left v right -> left * v * right) t
+
+(* Exercise 6: Write a function that calculates the height of a binary tree *)
+let btree_height (t: 'a btree) : int =
+  tree_fold 1 (fun left v right -> 1 + (max left right)) t 
+
+(* Let's now consider a different kind of inductive type,
+this type will be what's called a rose tree *)
+type rose_tree = Rose of 'a * 'a rose_tree list
+
+(* Now, let's write a fold function for this inductive type *)
+let rt_fold (r: 'a -> 'b list -> 'b) (t: 'a rose_tree) : 'b =
+  match t with
+  | Rose (v, list) -> r v (List.map (rt_fold r) t)
+
+(* Excerise 7: Write the same product function but on rose tree *)
+let rt_product (t: int rose_tree) : int =
+  let f (v: 'a) (vs: int list) : int =
+    v * (fun xs -> List.fold_right ( * ) xs 1) vs
+  in
+  reduce f t
+
+(* Think of as a function that multiplies the value by
+the folded up list - the second component is a list remember! *)
+
+(* Exercise 8: Write height for rose tree type *)
+let height (t: 'a rose_tree) : int =
+  let f (v: 'a) (vs: int list) : int =
+    1 + (fun xs -> List.fold_right max xs 0) vs
+  in
+  reduce f t
 
