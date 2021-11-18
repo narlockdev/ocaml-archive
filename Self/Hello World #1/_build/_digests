@@ -1,4 +1,0 @@
-"Resource: /home/narlo041/csci2041/self/hello.ml": ">5\235\145\207\226V\146:\172\218\151\190\253\161\140"
-"Rule: ocaml: ml -> cmo & cmi (%=hello )": "\131#\132\181\153\235\224\222$i\255P\241c\1985"
-"Rule: ocaml dependencies ml (%=hello )": "\238\189\217H\131H\205t\017kg\166\169\004L^"
-"Rule: ocaml: cmo* -> byte (%=hello )": "k\205\244\156\168\225r\1624f\240\000\141\242\154\185"
